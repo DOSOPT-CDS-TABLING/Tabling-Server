@@ -1,7 +1,7 @@
 package org.sopt.tablingServer.order.domain;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.*;
 import org.sopt.tablingServer.common.domain.BaseTimeEntity;
 
@@ -34,6 +34,6 @@ public class Order extends BaseTimeEntity {
 
     private String requestContent;
 
-    private LocalDate OrderDate;
+    private LocalDateTime OrderDate;
 
 }
