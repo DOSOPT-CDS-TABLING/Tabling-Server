@@ -13,6 +13,7 @@ public record MenuResponse(
         String menuCategory,
         List<MenuInfoResponse> menuInfoList
 ) {
+    // 메뉴의 카테고리에 따라 그룹핑 하여 반환
     public static List<MenuResponse> of(List<Menu> menuList) {
         Map<String, List<MenuInfoResponse>> groupedMenus = menuList.stream()
                 .collect(Collectors.groupingBy(
