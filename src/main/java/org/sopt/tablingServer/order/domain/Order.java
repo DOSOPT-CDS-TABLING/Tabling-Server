@@ -10,6 +10,7 @@ import org.sopt.tablingServer.common.domain.BaseTimeEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@Table(name = "orders")
 public class Order extends BaseTimeEntity {
 
     @Id
