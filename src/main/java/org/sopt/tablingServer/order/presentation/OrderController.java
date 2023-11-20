@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.tablingServer.common.dto.ApiResponse;
 import org.sopt.tablingServer.order.application.OrderService;
 import org.sopt.tablingServer.order.dto.response.OrderResponse;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    @GetMapping
     public ApiResponse<List<OrderResponse>> getOrderList() {
         return ApiResponse.success(GET_ORDER_LIST_SUCCESS, orderService.getOrders());
     }
