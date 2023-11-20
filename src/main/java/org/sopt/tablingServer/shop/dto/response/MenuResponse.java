@@ -15,7 +15,7 @@ public record MenuResponse(
 ) {
     // 메뉴의 카테고리에 따라 그룹핑 하여 반환
     public static List<MenuResponse> of(List<Menu> menuList) {
-        Map<String, List<MenuInfoResponse>> groupedMenus = menuList.stream()
+        Map<String, List<MenuInfoResponse>> groupedMenuList = menuList.stream()
                 .collect(Collectors.groupingBy(
                         Menu::getMenuCategory,
                         Collectors.mapping(
@@ -24,7 +24,7 @@ public record MenuResponse(
                         )
                 ));
 
-        return groupedMenus.entrySet().stream()
+        return groupedMenuList.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .map(entry -> new MenuResponse(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
