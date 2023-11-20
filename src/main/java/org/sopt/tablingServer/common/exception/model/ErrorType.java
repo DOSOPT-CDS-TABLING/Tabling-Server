@@ -12,6 +12,7 @@ public enum ErrorType {
     /**
      * 404 NOT FOUND
      */
+    NOT_FOUND_SHOP_ERROR(HttpStatus.NOT_FOUND, "일치하는 매장 정보가 없습니다"),
 
     /**
      * 500 INTERNAL SERVER ERROR

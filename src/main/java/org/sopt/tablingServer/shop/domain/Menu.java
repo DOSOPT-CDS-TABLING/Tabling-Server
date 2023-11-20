@@ -23,6 +23,8 @@ public class Menu extends BaseTimeEntity {
     //    @ColumnDefault("https://github.com/DOSOPT-CDS-TABLING/Tabling-Server/assets/67463603/378964af-b46a-45c2-87ed-31d8a78fa002.png")
     private String menuPhotoUrl;
 
+    private String menuName;
+
     @Column(nullable = false)
     private Integer price;
 }
