@@ -24,6 +24,7 @@ public record MenuResponse(
                 ));
 
         return groupedMenus.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
                 .map(entry -> new MenuResponse(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
