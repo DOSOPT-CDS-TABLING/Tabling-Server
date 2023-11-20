@@ -13,6 +13,7 @@ public enum SuccessType {
      * 200 OK
      */
     PROCESS_SUCCESS(HttpStatus.OK, "OK"),
+    GET_ORDER_LIST_SUCCESS(HttpStatus.OK,"주문 내역의 목록 반환이 완료되었습니다.")
 
     /**
      * 201 CREATED
