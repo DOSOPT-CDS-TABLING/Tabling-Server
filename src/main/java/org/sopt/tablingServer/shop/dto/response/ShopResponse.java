@@ -6,6 +6,7 @@ import org.sopt.tablingServer.shop.domain.Shop;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record ShopResponse(
+        Long shopId,
         String name,
         float averageStar,
         int reviewCount,
@@ -18,6 +19,7 @@ public record ShopResponse(
 
     public static ShopResponse of(Shop shop) {
         return new ShopResponse(
+                shop.getId(),
                 shop.getName(),
                 shop.getAverageStar(),
                 shop.getReviewCount(),
