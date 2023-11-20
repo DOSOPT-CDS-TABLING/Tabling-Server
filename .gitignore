@@ -164,5 +164,6 @@ gradle-app.setting
 
 ### Config ###
 application.yaml
+application.yml
 
 # End of https://www.gitignore.io/api/java,macos,gradle,intellij
