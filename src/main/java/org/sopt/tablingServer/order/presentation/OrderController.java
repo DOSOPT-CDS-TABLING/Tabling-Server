@@ -25,11 +25,11 @@ public class OrderController {
 
     @GetMapping
     public ApiResponse<List<OrderListResponse>> orderList() {
-        return ApiResponse.success(GET_ORDER_LIST_SUCCESS, orderService.findOrders());
+        return ApiResponse.success(GET_ORDER_LIST_SUCCESS, orderService.findOrderList());
     }
 
     @GetMapping("/{orderId}")
-    public ApiResponse<OrderDetailResponse> orderDetail(@PathVariable Long orderId) {
-        return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, orderService.findOne(orderId));
+    public ApiResponse<OrderDetailResponse> orderDetails(@PathVariable Long orderId) {
+        return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, orderService.findOrder(orderId));
     }
 }

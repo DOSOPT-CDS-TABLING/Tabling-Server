@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
     private final OrderJpaRepository orderJpaRepository;
 
-    public List<OrderListResponse> findOrders() {
+    public List<OrderListResponse> findOrderList() {
         return orderJpaRepository.findAll()
                 .stream()
                 .map(OrderListResponse::of)
                 .collect(Collectors.toList());
     }
 
-    public OrderDetailResponse findOne(Long orderId) {
+    public OrderDetailResponse findOrder(Long orderId) {
         return OrderDetailResponse.of(orderJpaRepository.findByIdOrThrow(orderId));
     }
 }
