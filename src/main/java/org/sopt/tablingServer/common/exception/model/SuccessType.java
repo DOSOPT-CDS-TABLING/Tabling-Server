@@ -13,6 +13,8 @@ public enum SuccessType {
      * 200 OK
      */
     PROCESS_SUCCESS(HttpStatus.OK, "OK"),
+    GET_ORDER_LIST_SUCCESS(HttpStatus.OK,"주문 내역의 목록 반환이 완료되었습니다."),
+    GET_ORDER_DETAIL_SUCCESS(HttpStatus.OK, "주문 내역의 상세 정보 반환이 완료되었습니다."), 
     GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS(HttpStatus.OK, "일 평균 대기인원을 기준으로 서울 남부 인기 매장 리스트 반환이 완료되었습니다."),
     GET_SHOP_DETAIL_SUCCESS(HttpStatus.OK, "매장 상세 정보 반환이 완료되었습니다."),
 

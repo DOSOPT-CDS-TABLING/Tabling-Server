@@ -166,4 +166,7 @@ gradle-app.setting
 application.yaml
 application.yml
 
+### Test ###
+data.sql
+
 # End of https://www.gitignore.io/api/java,macos,gradle,intellij

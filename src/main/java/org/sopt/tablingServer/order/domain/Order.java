@@ -1,6 +1,7 @@
 package org.sopt.tablingServer.order.domain;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.*;
 import org.sopt.tablingServer.common.domain.BaseTimeEntity;
 
@@ -9,6 +10,7 @@ import org.sopt.tablingServer.common.domain.BaseTimeEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@Table(name = "orders")
 public class Order extends BaseTimeEntity {
 
     @Id
@@ -32,5 +34,7 @@ public class Order extends BaseTimeEntity {
     private int totalPrice;
 
     private String requestContent;
+
+    private LocalDateTime OrderDate;
 
 }
