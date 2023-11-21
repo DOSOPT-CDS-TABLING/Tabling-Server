@@ -1,9 +1,13 @@
 package org.sopt.tablingServer.order.dto.response;
 
+import org.sopt.tablingServer.order.domain.Order;
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import java.time.LocalDateTime;
-import org.sopt.tablingServer.order.domain.Order;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public record OrderDetailResponse(
@@ -11,10 +15,11 @@ public record OrderDetailResponse(
         String shopName,
         int waitingNumber,
         int beforeCount,
-        LocalDateTime orderDate,
+        String orderDate,
         int personCount,
         String orderStatus,
-        int totalPrice
+        int totalPrice,
+        String requestContent
 ) {
     public static OrderDetailResponse of(Order order) {
         return new OrderDetailResponse(
@@ -22,10 +27,17 @@ public record OrderDetailResponse(
                 order.getShopName(),
                 order.getWaitingNumber(),
                 order.getBeforeCount(),
-                order.getOrderDate(),
+                formatOrderDate(order.getOrderDate()),
                 order.getPersonCount(),
                 order.getOrderStatus().getValue(),
-                order.getTotalPrice()
+                order.getTotalPrice(),
+                order.getRequestContent()
         );
+    }
+
+    private static String formatOrderDate(LocalDateTime orderDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd (E) HH:mm", Locale.KOREA);
+
+        return orderDate.format(formatter);
     }
 }
