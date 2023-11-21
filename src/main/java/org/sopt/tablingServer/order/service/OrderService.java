@@ -1,11 +1,10 @@
-package org.sopt.tablingServer.order.application;
+package org.sopt.tablingServer.order.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.sopt.tablingServer.common.constant.Constraint;
 import org.sopt.tablingServer.common.exception.model.BusinessException;
 import org.sopt.tablingServer.order.domain.Order;
 import org.sopt.tablingServer.order.dto.request.OrderReserveRequest;
