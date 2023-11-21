@@ -18,7 +18,7 @@ public class ShopService {
     private final ShopJpaRepository shopJpaRepository;
 
 
-    public List<ShopResponse> findShopListByAverageWaiting() {
+    public List<ShopResponse> findShopListOrderByAverageWaiting() {
 
         return shopJpaRepository.findAllByOrderByAverageWaitingDesc().stream()
                 .map(ShopResponse::of)

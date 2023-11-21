@@ -21,7 +21,7 @@ public class ShopController {
 
     @GetMapping
     public ApiResponse<List<ShopResponse>> shopList() {
-        return ApiResponse.success(GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS, shopService.findShopListByAverageWaiting());
+        return ApiResponse.success(GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS, shopService.findShopListOrderByAverageWaiting());
     }
 
     @GetMapping("/{shopId}")

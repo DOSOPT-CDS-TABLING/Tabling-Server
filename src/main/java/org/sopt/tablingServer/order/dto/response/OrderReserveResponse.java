@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.sopt.tablingServer.order.domain.Order;
 
+import static org.sopt.tablingServer.common.constant.DefaultString.DEFAULT_ORDER_STATUS;
+
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record OrderReserveResponse(
         Long orderId,
@@ -20,7 +22,7 @@ public record OrderReserveResponse(
                 order.getBeforeCount(),
                 order.getShopName(),
                 order.getPersonCount(),
-               "확정 예정"
+                DEFAULT_ORDER_STATUS
         );
     }
 }

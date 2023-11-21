@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.sopt.tablingServer.common.constant.Constraint;
 import org.sopt.tablingServer.common.exception.model.BusinessException;
 import org.sopt.tablingServer.order.domain.Order;
 import org.sopt.tablingServer.order.dto.request.OrderReserveRequest;
@@ -17,6 +18,8 @@ import org.sopt.tablingServer.shop.infrastructure.ShopJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.sopt.tablingServer.common.constant.Constraint.*;
+import static org.sopt.tablingServer.common.constant.DefaultString.DEFAULT_REQUEST_CONTENT;
 import static org.sopt.tablingServer.common.exception.model.ErrorType.TOO_MANY_PERSON_COUNT_ERROR;
 import static org.sopt.tablingServer.order.domain.OrderStatus.RESERVED;
 
@@ -41,31 +44,40 @@ public class OrderService {
     @Transactional
     public OrderReserveResponse createOrder(OrderReserveRequest request) {
         Shop targetShop = shopJpaRepository.findByIdOrThrow(request.shopId());
-        if (request.personCount() > 99) {
+        if (request.personCount() > MAX_PERSON_COUNT) {
             throw new BusinessException(TOO_MANY_PERSON_COUNT_ERROR);
         }
 
-        Random random = new Random();
-        int waitingNumber = 1 + random.nextInt(99); // 1 to 99
-        int beforeCount = 1 + random.nextInt(20); // 1 to 20
-        int totalPrice = 10000 + random.nextInt(20) * 1000; // 10000 to 30000 in steps of 1000
+        RandomResult result = getRandomResult();
 
         // 기왕 랜덤 생성한 김에 Shop에서도 수정
-        targetShop.changeCurrentWaiting(beforeCount + 1);
+        targetShop.changeCurrentWaiting(result.beforeCount() + 1);
 
         Order order = Order.builder()
                 .orderStatus(RESERVED)
                 .shopName(targetShop.getName())
                 .personCount(request.personCount())
-                .waitingNumber(waitingNumber)
-                .beforeCount(beforeCount)
-                .totalPrice(totalPrice)
-                .requestContent("테이크아웃 하겠습니다!")
+                .waitingNumber(result.waitingNumber())
+                .beforeCount(result.beforeCount())
+                .totalPrice(result.totalPrice())
+                .requestContent(DEFAULT_REQUEST_CONTENT)
                 .orderDate(LocalDateTime.now())
                 .build();
 
         orderJpaRepository.save(order);
 
         return OrderReserveResponse.of(order);
+    }
+
+    private static RandomResult getRandomResult() {
+        Random random = new Random();
+        int waitingNumber = 1 + random.nextInt(MAX_PERSON_COUNT); // 1 to 99
+        int beforeCount = 1 + random.nextInt(MAX_BEFORE_COUNT); // 1 to 20
+        int totalPrice = 10000 + random.nextInt(MAX_PRICE_STEP) * 1000; // 10000 to 30000 in steps of 1000
+
+        return new RandomResult(waitingNumber, beforeCount, totalPrice);
+    }
+
+    private record RandomResult(int waitingNumber, int beforeCount, int totalPrice) {
     }
 }
