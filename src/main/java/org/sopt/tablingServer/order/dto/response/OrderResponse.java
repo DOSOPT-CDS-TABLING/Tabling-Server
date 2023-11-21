@@ -10,23 +10,23 @@ import org.sopt.tablingServer.order.domain.OrderStatus;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public record OrderResponse(
         Long orderId,
-        OrderStatus orderStatus,
+        String orderStatus,
         String shopName,
         int personCount,
         int waitingNumber,
-        int beforeCont,
+        int beforeCount,
         long remainingReviewPeriod
 ) {
     public static OrderResponse of(Order order) {
         final int REVIEW_DEADLINE_DAYS = 3;
         return new OrderResponse(
                 order.getId(),
-                order.getOrderStatus(),
+                order.getOrderStatus().getValue(),
                 order.getShopName(),
                 order.getPersonCount(),
                 order.getWaitingNumber(),
                 order.getBeforeCount(),
-                ChronoUnit.DAYS.between(order.getOrderDate().plusDays(REVIEW_DEADLINE_DAYS), LocalDateTime.now())
+                ChronoUnit.DAYS.between(LocalDateTime.now(), order.getOrderDate().plusDays(REVIEW_DEADLINE_DAYS))
         );
     }
 }
