@@ -1,4 +1,4 @@
-package org.sopt.tablingServer.order.application;
+package org.sopt.tablingServer.order.service;
 
 import java.util.List;
 import java.util.stream.Collectors;

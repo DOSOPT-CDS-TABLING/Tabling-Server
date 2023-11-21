@@ -1,7 +1,7 @@
-package org.sopt.tablingServer.order.presentation;
+package org.sopt.tablingServer.order.controller;
 
 import org.sopt.tablingServer.common.dto.ApiResponse;
-import org.sopt.tablingServer.order.application.OrderService;
+import org.sopt.tablingServer.order.service.OrderService;
 import org.sopt.tablingServer.order.dto.response.OrderDetailResponse;
 import org.sopt.tablingServer.order.dto.response.OrderListResponse;
 
