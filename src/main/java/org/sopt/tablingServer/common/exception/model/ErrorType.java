@@ -10,6 +10,11 @@ import org.springframework.http.HttpStatus;
 public enum ErrorType {
 
     /**
+     * 400 BAD REQUEST
+     */
+    TOO_MANY_PERSON_COUNT_ERROR(HttpStatus.BAD_REQUEST, "방문 인원 신청은 99명까지만 가능합니다."),
+
+    /**
      * 404 NOT FOUND
      */
     NOT_FOUND_MEMBER_ERROR(HttpStatus.NOT_FOUND, "존재하지 않는 멤버입니다"),
