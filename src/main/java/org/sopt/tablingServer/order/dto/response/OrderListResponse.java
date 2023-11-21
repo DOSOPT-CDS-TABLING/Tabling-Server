@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import org.sopt.tablingServer.order.domain.Order;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public record OrderResponse(
+public record OrderListResponse(
         Long orderId,
         String orderStatus,
         String shopName,
@@ -16,9 +16,9 @@ public record OrderResponse(
         int beforeCount,
         long remainingReviewPeriod
 ) {
-    public static OrderResponse of(Order order) {
+    public static OrderListResponse of(Order order) {
 
-        return new OrderResponse(
+        return new OrderListResponse(
                 order.getId(),
                 order.getOrderStatus().getValue(),
                 order.getShopName(),
