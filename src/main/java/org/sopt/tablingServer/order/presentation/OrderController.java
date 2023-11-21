@@ -29,7 +29,7 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ApiResponse<OrderDetailResponse> orderDetails(@PathVariable Long orderId) {
+    public ApiResponse<OrderDetailResponse> orderDetail(@PathVariable Long orderId) {
         return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, orderService.findOrder(orderId));
     }
 }
