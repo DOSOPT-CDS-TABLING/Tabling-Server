@@ -1,4 +1,4 @@
-package org.sopt.tablingServer.shop;
+package org.sopt.tablingServer.shop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.tablingServer.shop.dto.response.ShopDetailResponse;

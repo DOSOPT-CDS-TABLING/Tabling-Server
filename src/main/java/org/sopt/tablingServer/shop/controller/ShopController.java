@@ -1,7 +1,8 @@
-package org.sopt.tablingServer.shop;
+package org.sopt.tablingServer.shop.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sopt.tablingServer.common.dto.ApiResponse;
+import org.sopt.tablingServer.shop.service.ShopService;
 import org.sopt.tablingServer.shop.dto.response.ShopDetailResponse;
 import org.sopt.tablingServer.shop.dto.response.ShopResponse;
 import org.springframework.web.bind.annotation.GetMapping;
