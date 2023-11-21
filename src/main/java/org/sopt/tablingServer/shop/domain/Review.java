@@ -23,5 +23,5 @@ public class Review extends BaseTimeEntity {
 
     private int dayBefore;
 
-    private String content;
+    private String reviewContent;
 }

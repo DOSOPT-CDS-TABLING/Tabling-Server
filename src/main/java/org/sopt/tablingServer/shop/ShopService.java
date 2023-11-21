@@ -1,6 +1,7 @@
 package org.sopt.tablingServer.shop;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.tablingServer.shop.dto.response.ShopDetailResponse;
 import org.sopt.tablingServer.shop.dto.response.ShopResponse;
 import org.sopt.tablingServer.shop.infrastructure.ShopJpaRepository;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,10 @@ public class ShopService {
         return shopJpaRepository.findAllByOrderByAverageWaitingDesc().stream()
                 .map(ShopResponse::of)
                 .collect(Collectors.toList());
+    }
+
+    public ShopDetailResponse getShopDetailInfo(Long shopId) {
+
+        return ShopDetailResponse.of(shopJpaRepository.findByIdOrThrow(shopId));
     }
 }
