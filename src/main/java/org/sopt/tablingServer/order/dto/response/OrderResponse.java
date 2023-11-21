@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import org.sopt.tablingServer.order.domain.Order;
-import org.sopt.tablingServer.order.domain.OrderStatus;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public record OrderResponse(
@@ -18,7 +17,7 @@ public record OrderResponse(
         long remainingReviewPeriod
 ) {
     public static OrderResponse of(Order order) {
-        final int REVIEW_DEADLINE_DAYS = 3;
+
         return new OrderResponse(
                 order.getId(),
                 order.getOrderStatus().getValue(),
@@ -26,7 +25,21 @@ public record OrderResponse(
                 order.getPersonCount(),
                 order.getWaitingNumber(),
                 order.getBeforeCount(),
-                ChronoUnit.DAYS.between(LocalDateTime.now(), order.getOrderDate().plusDays(REVIEW_DEADLINE_DAYS))
+                getRemainingReviewPeriod(order.getOrderDate())
         );
+    }
+
+    private static long getRemainingReviewPeriod(LocalDateTime orderDate) {
+        final int REVIEW_DEADLINE_DAYS = 4;
+        final int MINUTES_IN_A_DAY = 1440;
+
+        long minutesDifference = ChronoUnit.MINUTES.between(LocalDateTime.now(),
+                orderDate.plusDays(REVIEW_DEADLINE_DAYS));
+
+        if (minutesDifference > 0) {
+            return minutesDifference / MINUTES_IN_A_DAY;
+        }
+        // REVIEW_DEADLINE이 지나면 -1일이라고 표시하기 위함
+        return minutesDifference / MINUTES_IN_A_DAY - 1;
     }
 }
