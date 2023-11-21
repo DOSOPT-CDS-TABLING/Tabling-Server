@@ -3,12 +3,9 @@ package org.sopt.tablingServer.shop.controller;
 import lombok.RequiredArgsConstructor;
 import org.sopt.tablingServer.common.dto.ApiResponse;
 import org.sopt.tablingServer.shop.service.ShopService;
-import org.sopt.tablingServer.shop.dto.response.ShopDetailResponse;
-import org.sopt.tablingServer.shop.dto.response.ShopResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.sopt.tablingServer.shop.dto.response.shop.ShopDetailResponse;
+import org.sopt.tablingServer.shop.dto.response.shop.ShopResponse;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,12 +20,12 @@ public class ShopController {
     private final ShopService shopService;
 
     @GetMapping
-    public ApiResponse<List<ShopResponse>> getShopList() {
-        return ApiResponse.success(GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS, shopService.getShopListByAverageWaiting());
+    public ApiResponse<List<ShopResponse>> shopList() {
+        return ApiResponse.success(GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS, shopService.findShopListByAverageWaiting());
     }
 
     @GetMapping("/{shopId}")
-    public ApiResponse<ShopDetailResponse> getShopDetail(@PathVariable Long shopId) {
-        return ApiResponse.success(GET_SHOP_DETAIL_SUCCESS, shopService.getShopDetailInfo(shopId));
+    public ApiResponse<ShopDetailResponse> shopDetail(@PathVariable Long shopId) {
+        return ApiResponse.success(GET_SHOP_DETAIL_SUCCESS, shopService.findShopDetailInfo(shopId));
     }
 }
