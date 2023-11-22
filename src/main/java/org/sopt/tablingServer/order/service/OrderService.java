@@ -1,5 +1,6 @@
 package org.sopt.tablingServer.order.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class OrderService {
     public List<OrderListResponse> findOrderList() {
         return orderJpaRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(Order::getOrderStatus)) // OrderStatus를 기준으로 오름차순으로 정렬
                 .map(OrderListResponse::of)
                 .collect(Collectors.toList());
     }
