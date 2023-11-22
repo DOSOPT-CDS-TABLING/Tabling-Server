@@ -8,6 +8,7 @@ import org.sopt.tablingServer.order.dto.response.OrderDetailResponse;
 import org.sopt.tablingServer.order.dto.response.OrderListResponse;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,16 +26,23 @@ public class OrderController {
 
     @GetMapping
     public ApiResponse<List<OrderListResponse>> orderList() {
-        return ApiResponse.success(GET_ORDER_LIST_SUCCESS, orderService.findOrderList());
+        List<OrderListResponse> responses = orderService.findOrderList()
+                .stream()
+                .map(OrderListResponse::of)
+                .collect(Collectors.toList());
+
+        return ApiResponse.success(GET_ORDER_LIST_SUCCESS, responses);
     }
 
     @GetMapping("/{orderId}")
     public ApiResponse<OrderDetailResponse> orderDetail(@PathVariable Long orderId) {
-        return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, orderService.findOrder(orderId));
+        OrderDetailResponse response = OrderDetailResponse.of(orderService.findOrder(orderId));
+        return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, response);
     }
 
     @PostMapping("/reserve")
     public ApiResponse<OrderReserveResponse> orderReserve(@RequestBody @Valid OrderReserveRequest request) {
-        return ApiResponse.success(RESERVE_ORDER_SUCCESS, orderService.createOrder(request));
+        OrderReserveResponse response = OrderReserveResponse.of(orderService.createOrder(request));
+        return ApiResponse.success(RESERVE_ORDER_SUCCESS, response);
     }
 }

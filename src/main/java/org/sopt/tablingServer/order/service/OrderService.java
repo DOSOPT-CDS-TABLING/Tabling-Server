@@ -29,19 +29,16 @@ public class OrderService {
     private final OrderJpaRepository orderJpaRepository;
     private final ShopJpaRepository shopJpaRepository;
 
-    public List<OrderListResponse> findOrderList() {
-        return orderJpaRepository.findAll()
-                .stream()
-                .map(OrderListResponse::of)
-                .collect(Collectors.toList());
+    public List<Order> findOrderList() {
+        return orderJpaRepository.findAll();
     }
 
-    public OrderDetailResponse findOrder(Long orderId) {
-        return OrderDetailResponse.of(orderJpaRepository.findByIdOrThrow(orderId));
+    public Order findOrder(Long orderId) {
+        return orderJpaRepository.findByIdOrThrow(orderId);
     }
 
     @Transactional
-    public OrderReserveResponse createOrder(OrderReserveRequest request) {
+    public Order createOrder(OrderReserveRequest request) {
         Shop targetShop = shopJpaRepository.findByIdOrThrow(request.shopId());
         if (request.personCount() > MAX_PERSON_COUNT) {
             throw new BusinessException(TOO_MANY_PERSON_COUNT_ERROR);
@@ -65,7 +62,7 @@ public class OrderService {
 
         orderJpaRepository.save(order);
 
-        return OrderReserveResponse.of(order);
+        return order;
     }
 
     private static RandomResult getRandomResult() {
