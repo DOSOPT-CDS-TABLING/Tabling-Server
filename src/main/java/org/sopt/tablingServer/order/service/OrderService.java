@@ -32,6 +32,7 @@ public class OrderService {
         return OrderDetailResponse.of(orderJpaRepository.findByIdOrThrow(orderId));
     }
 
+    @Transactional
     public OrderCompleteResponse updateOrderStatusComplete(OrderCompleteRequest request) {
         Order orderToUpdate = orderJpaRepository.findByIdOrThrow(request.orderId());
 
