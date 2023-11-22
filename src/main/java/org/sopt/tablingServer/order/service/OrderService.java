@@ -47,10 +47,10 @@ public class OrderService {
 
     @Transactional
     public Order createOrder(Long shopId, int personCount) {
-        Shop targetShop = shopJpaRepository.findByIdOrThrow(shopId);
         if (personCount > MAX_PERSON_COUNT) {
             throw new BusinessException(TOO_MANY_PERSON_COUNT_ERROR);
         }
+        Shop targetShop = shopJpaRepository.findByIdOrThrow(shopId);
 
         RandomResult result = getRandomResult();
 
