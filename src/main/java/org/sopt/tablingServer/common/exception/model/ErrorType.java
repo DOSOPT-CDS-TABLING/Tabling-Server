@@ -12,6 +12,7 @@ public enum ErrorType {
     /**
      * 400 BAD REQUEST
      */
+    ORDER_ALREADY_COMPLETED(HttpStatus.BAD_REQUEST,"이미 이용 완료된 주문입니다."),
     TOO_MANY_PERSON_COUNT_ERROR(HttpStatus.BAD_REQUEST, "방문 인원 신청은 99명까지만 가능합니다."),
 
     /**
