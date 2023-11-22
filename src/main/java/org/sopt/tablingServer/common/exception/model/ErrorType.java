@@ -13,6 +13,7 @@ public enum ErrorType {
      * 400 BAD REQUEST
      */
     TOO_MANY_PERSON_COUNT_ERROR(HttpStatus.BAD_REQUEST, "방문 인원 신청은 99명까지만 가능합니다."),
+    REQUEST_VALIDATION_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 요청입니다"),
 
     /**
      * 404 NOT FOUND

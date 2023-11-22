@@ -1,5 +1,6 @@
 package org.sopt.tablingServer.order.controller;
 
+import jakarta.validation.Valid;
 import org.sopt.tablingServer.common.dto.ApiResponse;
 import org.sopt.tablingServer.order.dto.request.OrderReserveRequest;
 import org.sopt.tablingServer.order.dto.response.OrderReserveResponse;
@@ -33,7 +34,7 @@ public class OrderController {
     }
 
     @PostMapping("/reserve")
-    public ApiResponse<OrderReserveResponse> orderReserve(@RequestBody OrderReserveRequest request) {
+    public ApiResponse<OrderReserveResponse> orderReserve(@RequestBody @Valid OrderReserveRequest request) {
         return ApiResponse.success(RESERVE_ORDER_SUCCESS, orderService.createOrder(request));
     }
 }
