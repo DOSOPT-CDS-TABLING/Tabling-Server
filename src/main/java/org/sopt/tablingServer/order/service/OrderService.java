@@ -45,8 +45,6 @@ public class OrderService {
         return orderToUpdate;
     }
 
-
-
     public Order createOrder(Long shopId, int personCount) {
         Shop targetShop = shopJpaRepository.findByIdOrThrow(shopId);
         if (personCount > MAX_PERSON_COUNT) {
@@ -61,7 +59,7 @@ public class OrderService {
         Order order = Order.builder()
                 .orderStatus(RESERVED)
                 .shopName(targetShop.getName())
-                .personCount(request.personCount())
+                .personCount(personCount)
                 .waitingNumber(result.waitingNumber())
                 .beforeCount(result.beforeCount())
                 .totalPrice(result.totalPrice())
