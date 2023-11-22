@@ -37,7 +37,7 @@ public class Order extends BaseTimeEntity {
 
     private String requestContent;
 
-    private LocalDateTime OrderDate;
+    private LocalDateTime orderDate;
 
     public void changeOrderStatusComplete() {
         this.checkOrderStatusComplete();

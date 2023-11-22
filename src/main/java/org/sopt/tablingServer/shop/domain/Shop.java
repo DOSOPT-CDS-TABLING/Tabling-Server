@@ -47,6 +47,10 @@ public class Shop extends BaseTimeEntity {
 
     private int currentWaiting;
 
+    public void changeCurrentWaiting(int currentWaiting) {
+        this.currentWaiting = currentWaiting;
+    }
+
     @Embedded
     private SalesInfo salesInfo;
 

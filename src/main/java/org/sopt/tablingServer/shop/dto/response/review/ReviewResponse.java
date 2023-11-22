@@ -1,4 +1,4 @@
-package org.sopt.tablingServer.shop.dto.response;
+package org.sopt.tablingServer.shop.dto.response.review;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

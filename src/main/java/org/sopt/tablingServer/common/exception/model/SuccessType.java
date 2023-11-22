@@ -23,6 +23,7 @@ public enum SuccessType {
     //== SHOP ==//
     GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS(HttpStatus.OK, "일 평균 대기인원을 기준으로 서울 남부 인기 매장 리스트 반환이 완료되었습니다."),
     GET_SHOP_DETAIL_SUCCESS(HttpStatus.OK, "매장 상세 정보 반환이 완료되었습니다."),
+    RESERVE_ORDER_SUCCESS(HttpStatus.OK, "원격 줄서기 신청이 완료되었습니다."),
 
     /**
      * 201 CREATED
