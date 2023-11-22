@@ -20,6 +20,7 @@ public class Order extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Setter
     private OrderStatus orderStatus;
 
     @Column(nullable = false)

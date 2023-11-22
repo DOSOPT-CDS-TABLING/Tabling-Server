@@ -10,6 +10,11 @@ import org.springframework.http.HttpStatus;
 public enum ErrorType {
 
     /**
+     * 400 BAD REQUEST
+     */
+    ORDER_ALREADY_COMPLETED(HttpStatus.BAD_REQUEST,"이미 이용 완료된 주문입니다."),
+
+    /**
      * 404 NOT FOUND
      */
     NOT_FOUND_MEMBER_ERROR(HttpStatus.NOT_FOUND, "존재하지 않는 멤버입니다"),
