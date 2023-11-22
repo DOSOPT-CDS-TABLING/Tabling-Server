@@ -4,10 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.sopt.tablingServer.common.exception.model.BusinessException;
-import org.sopt.tablingServer.common.exception.model.ErrorType;
 import org.sopt.tablingServer.order.domain.Order;
-import org.sopt.tablingServer.order.domain.OrderStatus;
 import org.sopt.tablingServer.order.dto.request.OrderCompleteRequest;
 import org.sopt.tablingServer.order.dto.response.OrderCompleteResponse;
 import org.sopt.tablingServer.order.dto.response.OrderDetailResponse;
@@ -37,13 +34,11 @@ public class OrderService {
     @Transactional
     public OrderCompleteResponse updateOrderStatusComplete(OrderCompleteRequest request) {
         Order orderToUpdate = orderJpaRepository.findByIdOrThrow(request.orderId());
-
-        if(orderToUpdate.getOrderStatus().equals(OrderStatus.COMPLETED)){
-            throw new BusinessException(ErrorType.ORDER_ALREADY_COMPLETED);
-        }
-
-        orderToUpdate.setOrderStatus(OrderStatus.COMPLETED);
+        orderToUpdate.changeOrderStatusComplete();
 
         return OrderCompleteResponse.of(orderToUpdate);
     }
+
+
+
 }

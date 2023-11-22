@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.*;
 import org.sopt.tablingServer.common.domain.BaseTimeEntity;
+import org.sopt.tablingServer.common.exception.model.BusinessException;
+import org.sopt.tablingServer.common.exception.model.ErrorType;
 
 @Entity
 @Getter
@@ -20,7 +22,6 @@ public class Order extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Setter
     private OrderStatus orderStatus;
 
     @Column(nullable = false)
@@ -37,5 +38,16 @@ public class Order extends BaseTimeEntity {
     private String requestContent;
 
     private LocalDateTime OrderDate;
+
+    public void changeOrderStatusComplete() {
+        this.checkOrderStatusComplete();
+        this.orderStatus = OrderStatus.COMPLETED;
+    }
+
+    private void checkOrderStatusComplete() {
+        if (this.orderStatus.equals(OrderStatus.COMPLETED)) {
+            throw new BusinessException(ErrorType.ORDER_ALREADY_COMPLETED);
+        }
+    }
 
 }
