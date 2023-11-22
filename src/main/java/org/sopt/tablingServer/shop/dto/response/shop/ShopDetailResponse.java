@@ -1,9 +1,11 @@
-package org.sopt.tablingServer.shop.dto.response;
+package org.sopt.tablingServer.shop.dto.response.shop;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.sopt.tablingServer.shop.domain.Review;
 import org.sopt.tablingServer.shop.domain.Shop;
+import org.sopt.tablingServer.shop.dto.response.review.ReviewResponse;
+import org.sopt.tablingServer.shop.dto.response.menu.MenuResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
