@@ -45,6 +45,7 @@ public class OrderService {
         return orderToUpdate;
     }
 
+    @Transactional
     public Order createOrder(Long shopId, int personCount) {
         Shop targetShop = shopJpaRepository.findByIdOrThrow(shopId);
         if (personCount > MAX_PERSON_COUNT) {
@@ -69,7 +70,7 @@ public class OrderService {
 
         orderJpaRepository.save(order);
 
-        return order;
+        return orderJpaRepository.findByIdOrThrow(shopId);
     }
 
     private static RandomResult getRandomResult() {

@@ -8,6 +8,7 @@ import org.sopt.tablingServer.shop.dto.response.shop.ShopResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.sopt.tablingServer.common.exception.model.SuccessType.GET_SHOP_DETAIL_SUCCESS;
 import static org.sopt.tablingServer.common.exception.model.SuccessType.GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS;
@@ -21,11 +22,18 @@ public class ShopController {
 
     @GetMapping
     public ApiResponse<List<ShopResponse>> shopList() {
-        return ApiResponse.success(GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS, shopService.findShopListOrderByAverageWaiting());
+        List<ShopResponse> response = shopService.findShopListOrderByAverageWaiting()
+                .stream()
+                .map(ShopResponse::of)
+                .collect(Collectors.toList());
+
+        return ApiResponse.success(GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS, response);
     }
 
     @GetMapping("/{shopId}")
     public ApiResponse<ShopDetailResponse> shopDetail(@PathVariable Long shopId) {
-        return ApiResponse.success(GET_SHOP_DETAIL_SUCCESS, shopService.findShopDetailInfo(shopId));
+        ShopDetailResponse response = ShopDetailResponse.of(shopService.findShopDetailInfo(shopId));
+
+        return ApiResponse.success(GET_SHOP_DETAIL_SUCCESS, response);
     }
 }
