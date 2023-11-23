@@ -15,6 +15,7 @@ public record ShopDetailResponse(
         // 기본 정보
         Long shopId,
         List<String> detailPhotoList,
+        int currentWaiting,
         String name,
         String longAddress,
 
@@ -42,6 +43,7 @@ public record ShopDetailResponse(
         return new ShopDetailResponse(
                 shop.getId(),
                 shop.getDetailPhotoList(),
+                shop.getCurrentWaiting(),
                 shop.getName(),
                 shop.getLongAddress(),
 

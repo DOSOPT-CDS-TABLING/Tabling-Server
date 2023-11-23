@@ -1,5 +1,6 @@
 package org.sopt.tablingServer.order.controller;
 
+import jakarta.validation.Valid;
 import org.sopt.tablingServer.common.dto.ApiResponse;
 import org.sopt.tablingServer.order.dto.response.OrderReserveResponse;
 import org.sopt.tablingServer.order.dto.response.OrderDetailResponse;
@@ -12,6 +13,7 @@ import org.sopt.tablingServer.order.dto.request.OrderCompleteRequest;
 import org.sopt.tablingServer.order.service.OrderService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,23 +40,32 @@ public class OrderController {
 
     @GetMapping
     public ApiResponse<List<OrderListResponse>> orderList() {
-        return ApiResponse.success(GET_ORDER_LIST_SUCCESS, orderService.findOrderList());
+        List<OrderListResponse> responses = orderService.findOrderList()
+                .stream()
+                .map(OrderListResponse::of)
+                .collect(Collectors.toList());
+
+        return ApiResponse.success(GET_ORDER_LIST_SUCCESS, responses);
     }
 
     @GetMapping("/{orderId}")
     public ApiResponse<OrderDetailResponse> orderDetail(@PathVariable Long orderId) {
-        return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, orderService.findOrder(orderId));
+        OrderDetailResponse response = OrderDetailResponse.of(orderService.findOrder(orderId));
+
+        return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, response);
     }
 
     @PatchMapping("/complete")
     public ApiResponse<OrderCompleteResponse> completeOrderStatus(@RequestBody OrderCompleteRequest request) {
-        return ApiResponse.success(UPDATE_ORDER_STATUS_COMPLETE_SUCCESS, orderService.updateOrderStatusComplete(request));
+        OrderCompleteResponse response = OrderCompleteResponse.of(orderService.updateOrderStatusComplete(request.orderId()));
+
+        return ApiResponse.success(UPDATE_ORDER_STATUS_COMPLETE_SUCCESS, response);
     }
 
-}
-
     @PostMapping("/reserve")
-    public ApiResponse<OrderReserveResponse> orderReserve(@RequestBody OrderReserveRequest request) {
-        return ApiResponse.success(RESERVE_ORDER_SUCCESS, orderService.createOrder(request));
+    public ApiResponse<OrderReserveResponse> orderReserve(@RequestBody @Valid OrderReserveRequest request) {
+        OrderReserveResponse response = OrderReserveResponse.of(orderService.createOrder(request.shopId(), request.personCount()));
+
+        return ApiResponse.success(RESERVE_ORDER_SUCCESS, response);
     }
 }

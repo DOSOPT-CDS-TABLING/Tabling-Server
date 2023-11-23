@@ -27,6 +27,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+	// validation (2.3 버전 이전에는 spring-boot-starter-web 의존성 내부에 함께 있었지만, 2.3 버전부터 분리됨)
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 	// mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
 

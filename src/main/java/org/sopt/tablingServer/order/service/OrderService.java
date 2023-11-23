@@ -3,13 +3,6 @@ package org.sopt.tablingServer.order.service;
 import org.sopt.tablingServer.order.infrastructure.OrderJpaRepository;
 import org.sopt.tablingServer.shop.infrastructure.ShopJpaRepository;
 
-import org.sopt.tablingServer.order.dto.request.OrderCompleteRequest;
-import org.sopt.tablingServer.order.dto.response.OrderCompleteResponse;
-import org.sopt.tablingServer.order.dto.request.OrderReserveRequest;
-import org.sopt.tablingServer.order.dto.response.OrderDetailResponse;
-import org.sopt.tablingServer.order.dto.response.OrderListResponse;
-import org.sopt.tablingServer.order.dto.response.OrderReserveResponse;
-
 import org.sopt.tablingServer.order.domain.Order;
 import org.sopt.tablingServer.shop.domain.Shop;
 
@@ -18,10 +11,8 @@ import org.sopt.tablingServer.common.exception.model.BusinessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 
 import lombok.RequiredArgsConstructor;
@@ -38,33 +29,28 @@ public class OrderService {
     private final OrderJpaRepository orderJpaRepository;
     private final ShopJpaRepository shopJpaRepository;
 
-    public List<OrderListResponse> findOrderList() {
-        return orderJpaRepository.findAll()
-                .stream()
-                .sorted(Comparator.comparing(Order::getOrderStatus)) // OrderStatus를 기준으로 오름차순으로 정렬
-                .map(OrderListResponse::of)
-                .collect(Collectors.toList());
+    public List<Order> findOrderList() {
+        return orderJpaRepository.findAll();
     }
 
-    public OrderDetailResponse findOrder(Long orderId) {
-        return OrderDetailResponse.of(orderJpaRepository.findByIdOrThrow(orderId));
+    public Order findOrder(Long orderId) {
+        return orderJpaRepository.findByIdOrThrow(orderId);
     }
 
     @Transactional
-    public OrderCompleteResponse updateOrderStatusComplete(OrderCompleteRequest request) {
-        Order orderToUpdate = orderJpaRepository.findByIdOrThrow(request.orderId());
+    public Order updateOrderStatusComplete(Long orderId) {
+        Order orderToUpdate = orderJpaRepository.findByIdOrThrow(orderId);
         orderToUpdate.changeOrderStatusComplete();
 
-        return OrderCompleteResponse.of(orderToUpdate);
+        return orderToUpdate;
     }
 
-
-
-    public OrderReserveResponse createOrder(OrderReserveRequest request) {
-        Shop targetShop = shopJpaRepository.findByIdOrThrow(request.shopId());
-        if (request.personCount() > MAX_PERSON_COUNT) {
+    @Transactional
+    public Order createOrder(Long shopId, int personCount) {
+        if (personCount > MAX_PERSON_COUNT) {
             throw new BusinessException(TOO_MANY_PERSON_COUNT_ERROR);
         }
+        Shop targetShop = shopJpaRepository.findByIdOrThrow(shopId);
 
         RandomResult result = getRandomResult();
 
@@ -74,7 +60,7 @@ public class OrderService {
         Order order = Order.builder()
                 .orderStatus(RESERVED)
                 .shopName(targetShop.getName())
-                .personCount(request.personCount())
+                .personCount(personCount)
                 .waitingNumber(result.waitingNumber())
                 .beforeCount(result.beforeCount())
                 .totalPrice(result.totalPrice())
@@ -84,7 +70,7 @@ public class OrderService {
 
         orderJpaRepository.save(order);
 
-        return OrderReserveResponse.of(order);
+        return orderJpaRepository.findByIdOrThrow(shopId);
     }
 
     private static RandomResult getRandomResult() {
