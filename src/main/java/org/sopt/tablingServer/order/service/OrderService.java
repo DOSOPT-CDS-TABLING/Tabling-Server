@@ -1,5 +1,6 @@
 package org.sopt.tablingServer.order.service;
 
+import org.sopt.tablingServer.order.domain.OrderStatus;
 import org.sopt.tablingServer.order.dto.response.OrderCompleteResponse;
 import org.sopt.tablingServer.order.dto.response.OrderDetailResponse;
 import org.sopt.tablingServer.order.dto.response.OrderListResponse;
@@ -15,6 +16,7 @@ import org.sopt.tablingServer.common.exception.model.BusinessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.time.LocalDateTime;
@@ -22,9 +24,11 @@ import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 
+import static java.util.Comparator.*;
 import static org.sopt.tablingServer.common.constant.Constraint.*;
 import static org.sopt.tablingServer.common.constant.DefaultString.DEFAULT_REQUEST_CONTENT;
 import static org.sopt.tablingServer.common.exception.model.ErrorType.TOO_MANY_PERSON_COUNT_ERROR;
+import static org.sopt.tablingServer.order.domain.OrderStatus.*;
 import static org.sopt.tablingServer.order.domain.OrderStatus.RESERVED;
 
 @Service
@@ -37,9 +41,10 @@ public class OrderService {
     public List<OrderListResponse> findOrderList() {
         return orderJpaRepository.findAll()
                 .stream()
+                .sorted(comparing(Order::getOrderStatus, comparing(status -> status == RESERVED ? 0 : 1)))
                 .map(OrderListResponse::of)
                 .collect(Collectors.toList());
-    }
+        }
 
     public OrderDetailResponse findOrder(Long orderId) {
         return OrderDetailResponse.of(orderJpaRepository.findByIdOrThrow(orderId));
