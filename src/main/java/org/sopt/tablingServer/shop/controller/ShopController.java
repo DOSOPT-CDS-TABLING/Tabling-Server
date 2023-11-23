@@ -22,18 +22,11 @@ public class ShopController {
 
     @GetMapping
     public ApiResponse<List<ShopResponse>> shopList() {
-        List<ShopResponse> response = shopService.findShopListOrderByAverageWaiting()
-                .stream()
-                .map(ShopResponse::of)
-                .collect(Collectors.toList());
-
-        return ApiResponse.success(GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS, response);
+        return ApiResponse.success(GET_SHOP_LIST_BY_AVERAGE_WAITING_SUCCESS, shopService.findShopListOrderByAverageWaiting());
     }
 
     @GetMapping("/{shopId}")
     public ApiResponse<ShopDetailResponse> shopDetail(@PathVariable Long shopId) {
-        ShopDetailResponse response = ShopDetailResponse.of(shopService.findShopDetailInfo(shopId));
-
-        return ApiResponse.success(GET_SHOP_DETAIL_SUCCESS, response);
+        return ApiResponse.success(GET_SHOP_DETAIL_SUCCESS, shopService.findShopDetailInfo(shopId));
     }
 }

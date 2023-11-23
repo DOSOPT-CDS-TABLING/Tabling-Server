@@ -13,7 +13,6 @@ import org.sopt.tablingServer.order.dto.request.OrderCompleteRequest;
 import org.sopt.tablingServer.order.service.OrderService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.sopt.tablingServer.common.exception.model.SuccessType.GET_ORDER_DETAIL_SUCCESS;
 import static org.sopt.tablingServer.common.exception.model.SuccessType.GET_ORDER_LIST_SUCCESS;
 import static org.sopt.tablingServer.common.exception.model.SuccessType.UPDATE_ORDER_STATUS_COMPLETE_SUCCESS;
+
 import org.springframework.web.bind.annotation.*;
 
 import static org.sopt.tablingServer.common.exception.model.SuccessType.*;
@@ -40,32 +40,21 @@ public class OrderController {
 
     @GetMapping
     public ApiResponse<List<OrderListResponse>> orderList() {
-        List<OrderListResponse> responses = orderService.findOrderList()
-                .stream()
-                .map(OrderListResponse::of)
-                .collect(Collectors.toList());
-
-        return ApiResponse.success(GET_ORDER_LIST_SUCCESS, responses);
+        return ApiResponse.success(GET_ORDER_LIST_SUCCESS, orderService.findOrderList());
     }
 
     @GetMapping("/{orderId}")
     public ApiResponse<OrderDetailResponse> orderDetail(@PathVariable Long orderId) {
-        OrderDetailResponse response = OrderDetailResponse.of(orderService.findOrder(orderId));
-
-        return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, response);
+        return ApiResponse.success(GET_ORDER_DETAIL_SUCCESS, orderService.findOrder(orderId));
     }
 
     @PatchMapping("/complete")
     public ApiResponse<OrderCompleteResponse> completeOrderStatus(@RequestBody OrderCompleteRequest request) {
-        OrderCompleteResponse response = OrderCompleteResponse.of(orderService.updateOrderStatusComplete(request.orderId()));
-
-        return ApiResponse.success(UPDATE_ORDER_STATUS_COMPLETE_SUCCESS, response);
+        return ApiResponse.success(UPDATE_ORDER_STATUS_COMPLETE_SUCCESS, orderService.updateOrderStatusComplete(request.orderId()));
     }
 
     @PostMapping("/reserve")
     public ApiResponse<OrderReserveResponse> orderReserve(@RequestBody @Valid OrderReserveRequest request) {
-        OrderReserveResponse response = OrderReserveResponse.of(orderService.createOrder(request.shopId(), request.personCount()));
-
-        return ApiResponse.success(RESERVE_ORDER_SUCCESS, response);
+        return ApiResponse.success(RESERVE_ORDER_SUCCESS, orderService.createOrder(request.shopId(), request.personCount()));
     }
 }
