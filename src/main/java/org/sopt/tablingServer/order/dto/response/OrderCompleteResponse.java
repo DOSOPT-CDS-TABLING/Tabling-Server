@@ -1,7 +1,6 @@
 package org.sopt.tablingServer.order.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.sopt.tablingServer.order.domain.Order;
 
