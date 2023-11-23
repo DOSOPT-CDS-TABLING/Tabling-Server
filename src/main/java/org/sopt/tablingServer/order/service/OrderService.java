@@ -62,6 +62,8 @@ public class OrderService {
         RandomResult result = getRandomResult();
 
         // 기왕 랜덤 생성한 김에 Shop에서도 수정
+        // 이부분은 실제로는 동시성 이슈가 발생할 수 있어서, 기존의 값에 더하는 식으로 업데이트 해주거나
+        // Shop에서 컬럼으로 관리 안하고 Order 테이블의 레코드를 활용해 계산하면 좋을 것임
         targetShop.changeCurrentWaiting(result.beforeCount() + 1);
 
         Order order = Order.builder()
