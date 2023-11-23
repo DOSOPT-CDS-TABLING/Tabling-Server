@@ -1,12 +1,13 @@
 package org.sopt.tablingServer.order.dto.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import org.sopt.tablingServer.order.domain.Order;
 
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record OrderListResponse(
         Long orderId,
         String orderStatus,
