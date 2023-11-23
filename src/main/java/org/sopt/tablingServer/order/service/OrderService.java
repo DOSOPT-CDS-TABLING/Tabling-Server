@@ -84,7 +84,7 @@ public class OrderService {
 
         orderJpaRepository.save(order);
 
-        return OrderReserveResponse.of(orderJpaRepository.findByIdOrThrow(shopId));
+        return OrderReserveResponse.of(orderJpaRepository.findByIdOrThrow(order.getId()));
     }
 
     private static RandomResult getRandomResult() {
