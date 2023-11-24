@@ -25,6 +25,9 @@ public class Order extends BaseTimeEntity {
     private OrderStatus orderStatus;
 
     @Column(nullable = false)
+    private Long shopId;
+
+    @Column(nullable = false)
     private String shopName;
 
     private int personCount;

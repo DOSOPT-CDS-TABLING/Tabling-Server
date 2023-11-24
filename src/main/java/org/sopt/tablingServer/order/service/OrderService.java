@@ -28,7 +28,6 @@ import static java.util.Comparator.*;
 import static org.sopt.tablingServer.common.constant.Constraint.*;
 import static org.sopt.tablingServer.common.constant.DefaultString.DEFAULT_REQUEST_CONTENT;
 import static org.sopt.tablingServer.common.exception.model.ErrorType.TOO_MANY_PERSON_COUNT_ERROR;
-import static org.sopt.tablingServer.order.domain.OrderStatus.*;
 import static org.sopt.tablingServer.order.domain.OrderStatus.RESERVED;
 
 @Service
@@ -73,6 +72,7 @@ public class OrderService {
 
         Order order = Order.builder()
                 .orderStatus(RESERVED)
+                .shopId(targetShop.getId())
                 .shopName(targetShop.getName())
                 .personCount(personCount)
                 .waitingNumber(result.waitingNumber())

@@ -16,6 +16,7 @@ import static org.sopt.tablingServer.common.constant.Constraint.REVIEW_DEADLINE_
 public record OrderListResponse(
         Long orderId,
         String orderStatus,
+        Long shopId,
         String shopName,
         String orderDate,
         int personCount,
@@ -28,6 +29,7 @@ public record OrderListResponse(
         return new OrderListResponse(
                 order.getId(),
                 order.getOrderStatus().getValue(),
+                order.getShopId(),
                 order.getShopName(),
                 formatOrderDate(order.getOrderDate()),
                 order.getPersonCount(),
