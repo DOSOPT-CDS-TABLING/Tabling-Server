@@ -40,10 +40,14 @@ public class OrderService {
     public List<OrderListResponse> findOrderList() {
         return orderJpaRepository.findAll()
                 .stream()
-                .sorted(comparing(Order::getOrderStatus, comparing(status -> status == RESERVED ? 0 : 1)))
+                // 먼저 OrderStatus가 RESERVED인지에 따라 정렬
+                .sorted(Comparator.comparing(
+                                (Order order) -> order.getOrderStatus() != OrderStatus.RESERVED)
+                        // 그 다음 orderDate 기준으로 내림차순 정렬
+                        .thenComparing(Order::getOrderDate, Comparator.reverseOrder()))
                 .map(OrderListResponse::of)
                 .collect(Collectors.toList());
-        }
+    }
 
     public OrderDetailResponse findOrder(Long orderId) {
         return OrderDetailResponse.of(orderJpaRepository.findByIdOrThrow(orderId));
